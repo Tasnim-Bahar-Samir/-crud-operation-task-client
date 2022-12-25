@@ -14,11 +14,11 @@ function App() {
     {
       path: '/data/edit/:id',
       element: <EditData/>,
-      loader: ({params})=> fetch(`http://localhost:5000/data/${params.id}`)
+      loader: ({params})=> fetch(`https://cruds-operation-task-server.vercel.app/data/${params.id}`)
     }
   ])
   return (
-    <div className="App">
+    <div className="App max-w-7xl mx-auto p-5">
       <Toaster/>
       <RouterProvider router={router}></RouterProvider>
     </div>

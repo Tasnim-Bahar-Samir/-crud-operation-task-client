@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../../Utils/ConfirmationModal";
+import Loader from "../../Utils/Loader";
 import NewEntryModal from "../../Utils/NewEntryModal";
 import Entry from "../EntriesData/Entry";
 
@@ -9,11 +10,16 @@ const Home = () => {
   const [deletingData, setDeletingData] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [refresh, setRefresh] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetch("http://localhost:5000/data")
+    setLoading(true)
+    fetch("https://cruds-operation-task-server.vercel.app/data")
       .then((res) => res.json())
-      .then((data) => setEntries(data.data));
+      .then((data) => {
+        setEntries(data.data)
+        setLoading(false)
+      });
   }, [refresh]);
 
   //to close the modal
@@ -21,9 +27,10 @@ const Home = () => {
     setDeletingData(null)
   }
 
+  //to delete data
   const handleDeleteData = (data)=>{
     console.log(data)
-    fetch(`http://localhost:5000/data/delete/${data._id}`,{
+    fetch(`https://cruds-operation-task-server.vercel.app/data/delete/${data._id}`,{
         method:"DELETE"
     })
     .then(res => res.json())
@@ -37,9 +44,15 @@ const Home = () => {
         }
     })
   }
+  if(loading){
+    return <div className="flex items-center justify-center h-screen">
+        <Loader/>
+    </div>
+  }
   return (
-    <div>
-      <label onClick={()=>setShowModal(true)} htmlFor="NewEntryModal" className="btn btn-success">Add New Entry</label>
+    <div className="md:m-10 md:p-10 p-3 border-2 rounded-md"> 
+    <h1 className="text-center font-bold text-3xl my-4"> Table Data</h1>
+      <label onClick={()=>setShowModal(true)} htmlFor="NewEntryModal" className="btn btn-success my-4">Add New Entry</label>
       <div>
         <div className="overflow-x-auto shadow-lg">
           <table className="table w-full">
@@ -55,7 +68,7 @@ const Home = () => {
             </thead>
             <tbody>
               {entries.map((entry,idx) => (
-                <Entry entry={entry} setDeletingData={setDeletingData} index={idx} />
+                <Entry key={entry._id} entry={entry} setDeletingData={setDeletingData} index={idx} />
               ))}
             </tbody>
           </table>

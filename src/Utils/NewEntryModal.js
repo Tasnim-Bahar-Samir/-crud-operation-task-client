@@ -12,7 +12,7 @@ const NewEntryModal = ({showModal,setShowModal,refresh,setRefresh}) => {
             hobbies: form.hobbies.value,
         }
         console.log(data)
-        fetch('http://localhost:5000/data',{
+        fetch('https://cruds-operation-task-server.vercel.app/data',{
             method: "POST",
             headers:{
                 "content-type": "application/json"

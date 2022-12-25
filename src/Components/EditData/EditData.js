@@ -1,6 +1,6 @@
 import React from 'react'
 import toast from 'react-hot-toast'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 
 const EditData = () => {
     const navigate = useNavigate()
@@ -15,7 +15,7 @@ const EditData = () => {
             hobbies: form.hobbies.value,
         }
 
-        fetch(`http://localhost:5000/data/update/${data._id}`,{
+        fetch(`https://cruds-operation-task-server.vercel.app/data/update/${data._id}`,{
             method:"PATCH",
             headers:{
                 "content-type": "application/json"
@@ -33,8 +33,10 @@ const EditData = () => {
         })
     }
   return (
-    <div>
-        <div className="card md:w-[500px] border-2 bg-base-100 mx-auto mt-20">
+    <div className='mt-20 md:w-[500px] mx-auto'>
+        <Link to='/' className='btn btn-success my-4'>Back</Link>
+        <div className="card  border-2 bg-base-100">
+        
                 <form onSubmit={handleUpdate} className="card-body">
                   <div className="form-control">
                     <input

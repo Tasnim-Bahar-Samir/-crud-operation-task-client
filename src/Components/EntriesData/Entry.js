@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Entry = ({entry,index,setDeletingData}) => {
     const {_id,name, phone,email, hobbies} = entry;
-    console.log(index)
+    // console.log(index)
   return (
         <>
         <tr>
